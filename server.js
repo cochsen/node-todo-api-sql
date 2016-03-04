@@ -47,15 +47,12 @@ app.get('/todos/:id', function (req, res) {
 app.post('/todos', function (req, res) {
   // pick just the required data
   var body = _.pick(req.body, 'description', 'completed')
-  // validate input
-  if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
-    return res.status(400).send()
-  }
-  // set body.description to the trimmed value
-  body.description = body.description.trim()
-  body.id = todoNextId++
-  todos.push(body)
-  res.json(body)
+  // create record
+  db.todo.create(body).then(function (todo) {
+    res.json(todo.toJSON())
+  }, function (e) {
+    res.status(400).json(e)
+  })
 })
 
 // DELETE /todos/:id
