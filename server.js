@@ -62,6 +62,16 @@ app.post('/todos', function (req, res) {
   })
 })
 
+// POST /user
+app.post('/user', function (req, res) {
+  var body = _.pick(req.body, 'email', 'password')
+  db.user.create(body).then(function (user) {
+    res.json(user.toJSON())
+  }, function (e) {
+    res.status(400).json(e)
+  })
+})
+
 // DELETE /todos/:id
 app.delete('/todos/:id', function (req, res) {
   var todoId = parseInt(req.params.id)
