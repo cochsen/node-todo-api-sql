@@ -1,2 +1,2 @@
-# todo-api
-Example Node.js API
+# node-todo-api-sql
+Example Node.js API using Sequelize/SQLite/Postgresql
